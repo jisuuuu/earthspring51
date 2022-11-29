@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,9 @@ public class AppRunner implements ApplicationRunner {
 
     @Autowired
     ApplicationContext ctx;
+
+    @Autowired
+    ApplicationEventPublisher publishEvent;
 
     @Autowired
     MessageSource messageSource;
@@ -39,5 +43,7 @@ public class AppRunner implements ApplicationRunner {
 
         System.out.println(messageSource.getMessage("greeting", new String[]{"jisu"}, Locale.KOREA));
         System.out.println(messageSource.getMessage("greeting", new String[]{"jisu"}, Locale.US));
+
+        publishEvent.publishEvent(new MyEvent(this, 100));
     }
 }
