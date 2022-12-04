@@ -57,5 +57,7 @@ public class AppRunner implements ApplicationRunner {
         System.out.println(resource.exists());
         System.out.println(resource.getDescription());
         System.out.println(Files.readString(Path.of(resource.getURI())));
+
+        System.out.println(resourceLoader.getClass());
     }
 }
