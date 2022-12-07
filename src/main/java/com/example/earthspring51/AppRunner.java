@@ -62,7 +62,7 @@ public class AppRunner implements ApplicationRunner {
 
         System.out.println(resourceLoader.getClass());
 
-        Event event = new Event();
+        Event event = new Event(1);
         EventValidator eventValidator = new EventValidator();
         Errors errors = new BeanPropertyBindingResult(event, "evnet");
 
