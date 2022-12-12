@@ -1,5 +1,6 @@
 package com.example.earthspring51;
 
+import com.fasterxml.jackson.core.JsonToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -11,6 +12,9 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.expression.Expression;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
@@ -22,6 +26,27 @@ import java.util.Locale;
 
 @Component
 public class AppRunner implements ApplicationRunner {
+
+    @Value("#{1 + 1}")
+    int value;
+
+    @Value("#{'hello' + 'world'}")
+    String greeting;
+
+    @Value("#{1 eq 1}")
+    boolean trueOrFalse;
+
+    @Value("Hello")
+    String hello;
+
+    @Value("${my.value}")
+    int myValue;
+
+    @Value("#{${my.value} eq 101}")
+    boolean isMyValue101;
+
+    @Value("#{sample.data}")
+    int sampleData;
 
     @Autowired
     ApplicationContext ctx;
@@ -40,7 +65,7 @@ public class AppRunner implements ApplicationRunner {
 
     @Value("${app.name}")
     String appName;
-    
+
     @Autowired
     ConversionService conversionService;
 
@@ -82,5 +107,19 @@ public class AppRunner implements ApplicationRunner {
 
         System.out.println("conversionService.getClass().toString() = " + conversionService.getClass().toString());
         System.out.println(conversionService);
+
+        System.out.println("================");
+        System.out.println(value);
+        System.out.println(greeting);
+        System.out.println(trueOrFalse);
+        System.out.println(hello);
+        System.out.println(myValue);
+        System.out.println(isMyValue101);
+        System.out.println(sampleData);
+
+        ExpressionParser parser = new SpelExpressionParser();
+        Expression expression = parser.parseExpression("2 + 100");
+        Integer value = expression.getValue(Integer.class);
+        System.out.println("value = " + value);
     }
 }
