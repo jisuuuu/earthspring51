@@ -69,6 +69,9 @@ public class AppRunner implements ApplicationRunner {
     @Autowired
     ConversionService conversionService;
 
+    @Autowired
+    EventService eventService;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
@@ -121,5 +124,9 @@ public class AppRunner implements ApplicationRunner {
         Expression expression = parser.parseExpression("2 + 100");
         Integer value = expression.getValue(Integer.class);
         System.out.println("value = " + value);
+
+        eventService.createEvent();
+        eventService.publishEvent();
+        eventService.deleteEvent();
     }
 }
