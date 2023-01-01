@@ -71,6 +71,9 @@ public class AppRunner implements ApplicationRunner {
 
     @Autowired
     EventService eventService;
+    
+    @Autowired
+    StrangeEventService strangeEventService;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -128,5 +131,7 @@ public class AppRunner implements ApplicationRunner {
         eventService.createEvent();
         eventService.publishEvent();
         eventService.deleteEvent();
+
+        String event1 = strangeEventService.createEvent(null);
     }
 }
